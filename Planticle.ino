@@ -6,12 +6,13 @@ double Humidity = 0.0;
 double Temperature = 0.0;
 double Substrate = 0.0;
 int Overflow = 1234;
+int PumpStatus = 0;
 
 DHT theSensor(6, AM2302);
 
 GypsumSoilSensor soilSensor;
 
-EbbAndFlowSystem ebbAndFlow(D0, D3, D4, 10);
+EbbAndFlowSystem ebbAndFlow(D0, D3, D4, 50); // 50
 
 int Irrigate(String command)
 {
@@ -32,6 +33,7 @@ void setup() {
   Particle.variable("Temperature", Temperature);
   Particle.variable("Substrate", Substrate);
   Particle.variable("Overflow", Overflow);
+  Particle.variable("PumpStatus", PumpStatus);
 
   Particle.function("Irrigate", Irrigate);
   Particle.function("Stop", Stop);
@@ -85,7 +87,7 @@ void loop() {
   }
   else
   {
-      ebbAndFlow.loop();
+      PumpStatus = ebbAndFlow.loop();
 
       delay(10);
   }

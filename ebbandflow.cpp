@@ -10,7 +10,7 @@ EbbAndFlowSystem::EbbAndFlowSystem(pin_t pumpPin, pin_t overflowSensorPin, pin_t
 
   // Configure pins
   pinMode(_overflowSensorPin, INPUT);
-  pinMode(_lowSensorPin, INPUT);
+  pinMode(_lowSensorPin, INPUT_PULLUP);
   pinMode(_pumpPin, OUTPUT);
 }
 
@@ -26,7 +26,7 @@ void EbbAndFlowSystem::flow()
   _fillStartedTime = Time.now();
 
   // Start the punmp
-  analogWrite(_pumpPin, 128, 10000);
+  analogWrite(_pumpPin, 16, 12000);
 }
 
 void EbbAndFlowSystem::ebb()
@@ -37,25 +37,30 @@ void EbbAndFlowSystem::ebb()
   _fillState = Ebb;
 }
 
-void EbbAndFlowSystem::loop()
+EbbAndFlowPumpState EbbAndFlowSystem::loop()
 {
   // If we aren't in a flood cycle, do nothing
   if(_fillState == Ebb)
-    return;
+    return Passive;
 
   if(digitalRead(_overflowSensorPin) == LOW) // Check the overflow sensor
   {
     Serial.println("Overflow sensor triggered, stopping flood");
     ebb();
+    return Overflowed;
   }
   else if(digitalRead(_lowSensorPin) == LOW) // Check the low level sensor
   {
     Serial.println("Low water level sensed, stopping flood");
     ebb();
+    return LowWater;
   }
   else if(Time.now()-_fillStartedTime >= _timeout)  // Check the time
   {
     Serial.println("Flood has been going on for longer than permitted, stopping flood");
     ebb();
+    return TimedOut;
   }
+
+  return Pumping;
 }

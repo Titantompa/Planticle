@@ -9,6 +9,15 @@ enum EbbAndFlowState
   Flood
 };
 
+enum EbbAndFlowPumpState
+{
+  Passive = 0,
+  Pumping = 1,
+  TimedOut = 10,
+  Overflowed = 11,
+  LowWater = 12
+};
+
 class EbbAndFlowSystem {
 
 private:
@@ -23,7 +32,7 @@ private:
 public:
   EbbAndFlowSystem(pin_t pumpPin, pin_t overflowSensorPin, pin_t lowSensorPin, int timeout);
 
-  void loop();
+  EbbAndFlowPumpState loop();
 
   void flow();
 
@@ -31,6 +40,5 @@ public:
 
   EbbAndFlowState getFillState();
 };
-
 
 #endif
