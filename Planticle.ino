@@ -12,7 +12,7 @@ DHT theSensor(6, AM2302);
 
 GypsumSoilSensor soilSensor;
 
-EbbAndFlowSystem ebbAndFlow(D0, D3, D4, 50); // 50
+EbbAndFlowSystem ebbAndFlow(D0, D3, D4, 80); // 50
 
 int Irrigate(String command)
 {

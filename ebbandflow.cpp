@@ -25,13 +25,15 @@ void EbbAndFlowSystem::flow()
 
   _fillStartedTime = Time.now();
 
-  // Start the punmp
-  analogWrite(_pumpPin, 16, 12000);
+  // Start the pump
+  // digitalWrite(_pumpPin, HIGH);
+  analogWrite(_pumpPin, 75, 40000); // 16,12000
 }
 
 void EbbAndFlowSystem::ebb()
 {
   // Stop the pump
+  //digitalWrite(_pumpPin, LOW);
   analogWrite(_pumpPin, 0);
 
   _fillState = Ebb;
