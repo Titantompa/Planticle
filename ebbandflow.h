@@ -29,6 +29,8 @@ private:
   EbbAndFlowState _fillState;
   int32_t _fillStartedTime; // unixtime
 
+  int avgDigitalRead(pin_t pin);
+
 public:
   EbbAndFlowSystem(pin_t pumpPin, pin_t overflowSensorPin, pin_t lowSensorPin, int timeout);
 

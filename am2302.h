@@ -1,6 +1,7 @@
 #ifndef AM2302_H
 #define AM2302_H
 #include "application.h"
+
 /* DHT library
 
 MIT license
