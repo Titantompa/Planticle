@@ -27,7 +27,7 @@ void EbbAndFlowSystem::flow()
 
   // Start the pump
   // digitalWrite(_pumpPin, HIGH);
-  analogWrite(_pumpPin, 75, 40000); // 16,12000
+  analogWrite(_pumpPin, 85, 40000); // 16,12000
 }
 
 void EbbAndFlowSystem::ebb()
