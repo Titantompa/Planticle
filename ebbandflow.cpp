@@ -44,12 +44,20 @@ int EbbAndFlowSystem::avgDigitalRead(pin_t pin)
   int value = 0;
 
   value += digitalRead(pin) == HIGH ? 1 : 0;
-  delay(1);
+  delay(5);
   value += digitalRead(pin) == HIGH ? 1 : 0;
-  delay(1);
+  delay(4);
+  value += digitalRead(pin) == HIGH ? 1 : 0;
+  delay(5);
+  value += digitalRead(pin) == HIGH ? 1 : 0;
+  delay(4);
+  value += digitalRead(pin) == HIGH ? 1 : 0;
+  delay(3);
+  value += digitalRead(pin) == HIGH ? 1 : 0;
+  delay(6);
   value += digitalRead(pin) == HIGH ? 1 : 0;
 
-  return value > 1 ? HIGH : LOW;
+  return value > 3 ? HIGH : LOW;
 }
 
 EbbAndFlowPumpState EbbAndFlowSystem::loop()
@@ -58,19 +66,19 @@ EbbAndFlowPumpState EbbAndFlowSystem::loop()
   if(_fillState == Ebb)
     return Passive;
 
-  if(avgDigitalRead(_overflowSensorPin) == LOW) // Check the overflow sensor
+  /*if(avgDigitalRead(_overflowSensorPin) == LOW) // Check the overflow sensor
   {
     Serial.println("Overflow sensor triggered, stopping flood");
     ebb();
     return Overflowed;
   }
-  /*else if(digitalRead(_lowSensorPin) == LOW) // Check the low level sensor
+  else if(digitalRead(_lowSensorPin) == LOW) // Check the low level sensor
   {
     Serial.println("Low water level sensed, stopping flood");
     ebb();
     return LowWater;
-  }*/
-  else if(Time.now()-_fillStartedTime >= _timeout)  // Check the time
+  }
+  else*/ if(Time.now()-_fillStartedTime >= _timeout)  // Check the time
   {
     Serial.println("Flood has been going on for longer than permitted, stopping flood");
     ebb();

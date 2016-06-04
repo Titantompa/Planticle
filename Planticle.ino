@@ -13,7 +13,7 @@ DHT theSensor(6, AM2302);
 
 GypsumSoilSensor soilSensor;
 
-EbbAndFlowSystem ebbAndFlow(D0, D3, D4, 80); // 50
+EbbAndFlowSystem ebbAndFlow(D0, D3, D4, 75); // 50
 
 SRF01 rangeFinder;
 
@@ -75,13 +75,9 @@ void setup() {
   Particle.publish("spark/device/name");
 }
 
-
-
-
-
-
 void loop()
 {
+#if fooo
   if(!aquiringRange)
   {
     // Uppdatera var 5:e sekund
@@ -100,8 +96,8 @@ void loop()
   }
 
   delay(100);
+#endif
 
-#if fghhhhhh
   if(ebbAndFlow.getFillState() == Ebb)
   {
     Serial.println("Device: " + DeviceName);
@@ -143,5 +139,4 @@ void loop()
 
       delay(10);
   }
-  #endif
 }
