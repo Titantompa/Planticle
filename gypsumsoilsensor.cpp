@@ -24,8 +24,6 @@ double GypsumSoilSensor::readMoisture()
 {
   double summedSamples = 0.0;
 
-
-
     setADCSampleTime(ADC_SampleTime_480Cycles);
 
     double samples[readings*2];
@@ -39,8 +37,6 @@ double GypsumSoilSensor::readMoisture()
 
       samples[i*2] = analogRead(A0);
 
-      // summedSamples += analogRead(A0);
-
       digitalWrite(A2, LOW);
       digitalWrite(A1, HIGH);
 
@@ -49,39 +45,21 @@ double GypsumSoilSensor::readMoisture()
       samples[(i*2)+1] = 4095-analogRead(A0);
     }
 
-    for(int j = 0; j < readings*2; j++)
-    {
-      Serial.printf("Sample(%d): %f\r\n", j, samples[j]);
-      summedSamples += samples[j];
-    }
-
-
-#if fhfhfhf
-
-    //analogWrite(D0, 32, 10000);
-
-    for(int i = 0; i < readings; i++)
-    {
-      digitalWrite(A2, HIGH);
-      digitalWrite(A1, LOW);
-
-      delay(200);
-
-      summedSamples += analogRead(A0);
-
-      digitalWrite(A2, LOW);
-      digitalWrite(A1, HIGH);
-
-      delay(200);
-
-      summedSamples += 4095-analogRead(A0);
-    }
-#endif
-    //analogWrite(D0, 0);
-
     // Turn both pins off
     digitalWrite(A2, LOW);
     digitalWrite(A1, LOW);
 
-    return (summedSamples/(readings*2))/bias;
+    for(int j = 0; j < readings*2; j++)
+    {
+      // Serial.printf("Sample(%d): %f\r\n", j, samples[j]);
+      summedSamples += samples[j];
+    }
+
+    double average = summedSamples/(readings*2);
+    if(average > bias)
+    {
+      // Change bias!!
+    }
+
+    return average/bias;
 }

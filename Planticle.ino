@@ -103,15 +103,6 @@ void loop()
   delay(100);
 #endif
 
-Substrate = soilSensor.readMoisture();
-
-Serial.printf("Moisture: %f\r\n", Substrate);
-
-
-delay(2000);
-
-
-#if fghhhhhh
   if(ebbAndFlow.getFillState() == Ebb)
   {
     Serial.println("Device: " + DeviceName);
@@ -153,5 +144,4 @@ delay(2000);
 
       delay(10);
   }
-  #endif
 }
