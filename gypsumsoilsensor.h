@@ -5,6 +5,7 @@
 class GypsumSoilSensor
 {
 private:
+  int bias;
   int readings;
 public:
   GypsumSoilSensor();

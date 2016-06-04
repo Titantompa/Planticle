@@ -4,6 +4,8 @@ GypsumSoilSensor::GypsumSoilSensor()
 {
   readings = 20;
 
+  bias = 1000; // todo: change this!!!
+
   //pinMode(D0, OUTPUT);
   //digitalWrite(D0, LOW);
 
@@ -20,9 +22,41 @@ double GypsumSoilSensor::readTemperature()
 
 double GypsumSoilSensor::readMoisture()
 {
+  double summedSamples = 0.0;
+
+
+
     setADCSampleTime(ADC_SampleTime_480Cycles);
 
-    double summedSamples = 0.0;
+    double samples[readings*2];
+
+    for(int i = 0; i < readings; i++)
+    {
+      digitalWrite(A2, HIGH);
+      digitalWrite(A1, LOW);
+
+      delay(1);
+
+      samples[i*2] = analogRead(A0);
+
+      // summedSamples += analogRead(A0);
+
+      digitalWrite(A2, LOW);
+      digitalWrite(A1, HIGH);
+
+      delay(1);
+
+      samples[(i*2)+1] = 4095-analogRead(A0);
+    }
+
+    for(int j = 0; j < readings*2; j++)
+    {
+      Serial.printf("Sample(%d): %f\r\n", j, samples[j]);
+      summedSamples += samples[j];
+    }
+
+
+#if fhfhfhf
 
     //analogWrite(D0, 32, 10000);
 
@@ -42,12 +76,12 @@ double GypsumSoilSensor::readMoisture()
 
       summedSamples += 4095-analogRead(A0);
     }
-
+#endif
     //analogWrite(D0, 0);
 
     // Turn both pins off
     digitalWrite(A2, LOW);
     digitalWrite(A1, LOW);
 
-    return (summedSamples/readings)/8191;
+    return (summedSamples/(readings*2))/bias;
 }
