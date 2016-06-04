@@ -82,6 +82,7 @@ void setup() {
 
 void loop()
 {
+#if hallaboink
   if(!aquiringRange)
   {
     // Uppdatera var 5:e sekund
@@ -100,6 +101,15 @@ void loop()
   }
 
   delay(100);
+#endif
+
+Substrate = soilSensor.readMoisture();
+
+Serial.printf("Moisture: %f\r\n", Substrate);
+
+
+delay(2000);
+
 
 #if fghhhhhh
   if(ebbAndFlow.getFillState() == Ebb)
