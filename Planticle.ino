@@ -2,6 +2,7 @@
 #include "gypsumsoilsensor.h"
 #include "ebbandflow.h"
 #include "srf01.h"
+#include "parameters.h"
 
 double Humidity = 0.0;
 double Temperature = 0.0;
