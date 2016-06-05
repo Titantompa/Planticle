@@ -34,6 +34,13 @@ int Stop(String command)
   return 1;
 }
 
+int SetTimeout(String command)
+{
+  globalParameters.SetPumpTimeout(command.toInt());
+
+  return 1;
+}
+
 String DeviceName;
 
 // Open a serial terminal and see the device name printed out
@@ -56,6 +63,7 @@ void setup() {
 
   Particle.function("Irrigate", Irrigate);
   Particle.function("Stop", Stop);
+  Particle.function("SetTimeout", SetTimeout);
 
   theSensor.begin();
 
