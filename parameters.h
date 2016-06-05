@@ -7,12 +7,15 @@ class Parameters
 {
 private:
   bool VerifyMemory();
-  short _substrateBias;
+  uint16_t _substrateBias;
+  uint16_t _pumpTimeout;
   void LoadParameters();
   void SaveParameters();
 public:
-  short GetSubstrateBias();
-  void SetSubstrateBias(short bias);
+  uint16_t GetSubstrateBias();
+  void SetSubstrateBias(uint16_t bias);
+  uint16_t GetPumpTimeout();
+  void SetPumpTimeout(uint16_t timeout);
 };
 
 #endif

@@ -1,12 +1,11 @@
 #include "gypsumsoilsensor.h"
 
-GypsumSoilSensor::GypsumSoilSensor(Parameters params)
+GypsumSoilSensor::GypsumSoilSensor(Parameters * params)
 {
   parameters = params;
 
   readings = 20;
-  parameters.LoadParameters();
-  bias = parameters.GetSubstrateBias(); // todo: change this!!!
+  bias = parameters->GetSubstrateBias(); // todo: change this!!!
 
   Serial.printf("Substrate Humidity Sensor Bias: %d\r\n", bias);
 
@@ -64,9 +63,8 @@ double GypsumSoilSensor::readMoisture()
     {
       // Change bias!!
       bias = average+1;
-      Serial.printf("Substrate Humidity Sensor Bias: %d\r\n", bias);
-      parameters.SetSubstrateBias(bias);
-      parameters.SaveParameters();
+      Serial.printf("Extending Substrate Humidity Sensor Bias: %d\r\n", bias);
+      parameters->SetSubstrateBias(bias);
     }
 
     return average/bias;

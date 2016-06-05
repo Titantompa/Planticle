@@ -12,9 +12,11 @@ int PumpStatus = 0;
 
 DHT theSensor(6, AM2302);
 
-GypsumSoilSensor soilSensor;
+Parameters globalParameters;
 
-EbbAndFlowSystem ebbAndFlow(D0, D3, D4, 80); // 50
+GypsumSoilSensor soilSensor(&globalParameters);
+
+EbbAndFlowSystem ebbAndFlow(D0, D3, D4, globalParameters.GetPumpTimeout()); // 50
 
 SRF01 rangeFinder;
 
