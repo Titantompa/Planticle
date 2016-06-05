@@ -1,11 +1,9 @@
 #include "parameters.h"
-
-
 #include "application.h"
 
   bool Parameters::VerifyMemory()
   {
-    uint32_t token = 'P' << 25 | 'L' << 16 | 'T' << 8 | '0';
+    uint32_t token = 'P' << 25 | 'L' << 16 | 'T' << 8 | '1';
     uint32_t memToken;
 
     EEPROM.get(0, memToken);
@@ -15,7 +13,7 @@
       // Fill memory with default values
       EEPROM.put(0, token);
       EEPROM.put(sizeof(uint32_t), 500);
-      EEPROM.put(sizeof(uint32_t)+sizeof(uint16_t), 30); // 30 seconds
+      EEPROM.put(sizeof(uint32_t)+sizeof(_substrateBias), 5); // 30 seconds
     }
 
     return true;
@@ -26,7 +24,7 @@
     if(VerifyMemory())
     {
         EEPROM.get(sizeof(uint32_t), _substrateBias);
-        EEPROM.get(sizeof(uint32_t)+sizeof(uint16_t), _pumpTimeout);
+        EEPROM.get(sizeof(uint32_t)+sizeof(_substrateBias), _pumpTimeout);
     }
   }
 
@@ -34,7 +32,7 @@
   {
     VerifyMemory();
     EEPROM.put(sizeof(uint32_t), _substrateBias);
-    EEPROM.get(sizeof(uint32_t)+sizeof(uint16_t), _pumpTimeout);
+    EEPROM.get(sizeof(uint32_t)+sizeof(_substrateBias), _pumpTimeout);
   }
 
   uint16_t Parameters::GetSubstrateBias()
